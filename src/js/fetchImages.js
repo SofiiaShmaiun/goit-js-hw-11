@@ -20,10 +20,9 @@ queryInput.addEventListener('input', event => {
 async function fetchImages(event) {
   event.preventDefault();
   gallery.innerHTML = '';
-  loadMoreButton.classList.add('is-hidden');
-
   try {
-    if (queryInput.value === '') {
+    if (queryInput.value.trim() === '') {
+      loadMoreButton.classList.add('is-hidden');
       return;
     }
 
@@ -31,22 +30,20 @@ async function fetchImages(event) {
       `${BASE_URL}?key=${API_KEY}&q='${queryText}'&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${per_page}`
     );
 
-    if (response.data.totalHits > 0) {
-      Notiflix.Notify.success(
-        `Hooray! We found ${response.data.totalHits} images.`
-      );
-    }
-
     if (response.data.hits.length === 0) {
-      loadMoreButton.remove();
+      queryInput.value = '';
+      loadMoreButton.classList.add('is-hidden');
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
+    } else if (response.data.totalHits > 0) {
+      Notiflix.Notify.success(
+        `Hooray! We found ${response.data.totalHits} images.`
+      );
+      renderMarkup(response);
+      queryInput.value = '';
+      loadMoreButton.classList.remove('is-hidden');
     }
-
-    renderMarkup(response);
-    queryInput.value = '';
-    loadMoreButton.classList.remove('is-hidden');
   } catch (error) {
     console.log(error.stack);
   }
@@ -58,6 +55,5 @@ export {
   API_KEY,
   loadMoreButton,
   queryText,
-  page,
   per_page,
 };

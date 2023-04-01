@@ -7,10 +7,11 @@ import {
   BASE_URL,
   loadMoreButton,
   queryText,
-  page,
   per_page,
 } from './js/fetchImages';
 import Notiflix from 'notiflix';
+
+let page = 1;
 
 const submitQueryButton = document.querySelector('.search-form');
 
@@ -20,19 +21,21 @@ loadMoreButton.classList.add('is-hidden');
 
 async function handleLoadMore() {
   page += 1;
-
-  const response = await axios.get(
-    `${BASE_URL}?key=${API_KEY}&q='${queryText}'&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${per_page}`
-  );
-
-  if (response.data.hits.length < per_page) {
-    loadMoreButton.remove();
-    Notiflix.Notify.info(
-      `We're sorry, but you've reached the end of search results.`
+  try {
+    const response = await axios.get(
+      `${BASE_URL}?key=${API_KEY}&q='${queryText}'&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${per_page}`
     );
-  }
+    renderMarkup(response);
 
-  renderMarkup(response);
+    if (response.data.hits.length < per_page) {
+      loadMoreButton.classList.add('is-hidden');
+      Notiflix.Notify.info(
+        `We're sorry, but you've reached the end of search results.`
+      );
+    }
+  } catch (error) {
+    console.log(error.stack);
+  }
 
   const { height: cardHeight } = document
     .querySelector('.gallery')

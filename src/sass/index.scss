@@ -1,13 +1,14 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+$backgroundColor: #f8b195;
+$primaryColor: #c06c84;
+$hoverColor: #f67280;
+$activeColor: #6c5b7b;
+$textColor: #355c7d;
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #212121;
-  line-height: 1.5;
-  background: #d5e8d5;
+  background: $backgroundColor;
 }
 
 .is-hidden {
@@ -32,16 +33,15 @@ form {
 }
 
 input[type='text'] {
-  border: 2px solid #7a9474;
+  border: 2px solid $primaryColor;
   border-radius: 3px;
   outline: none;
   height: 40px;
   width: 250px;
   font-size: 15px;
-}
-
-input[type='text']:focus {
-  border: 2px solid #20281e;
+  &:focus {
+    border: 3px solid $hoverColor;
+  }
 }
 
 .gallery {
@@ -54,7 +54,7 @@ input[type='text']:focus {
 
 button {
   background-color: transparent;
-  border: 2px solid #1a1a1a;
+  border: 2px solid $primaryColor;
   border-radius: 10px;
   margin-left: 10px;
   cursor: pointer;
@@ -63,18 +63,18 @@ button {
   min-height: 40px;
   min-width: 100px;
   transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
 
-button:hover {
-  color: #fff;
-  background-color: #1a1a1a;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-
-button:active {
-  box-shadow: none;
-  transform: translateY(0);
+  &:hover {
+    color: #fff;
+    background-color: $hoverColor;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  &:active {
+    box-shadow: none;
+    transform: translateY(0);
+    border: 3px solid $activeColor;
+  }
 }
 
 button[type='button'] {
@@ -91,14 +91,15 @@ button[type='button'] {
   box-shadow: 0px 10px 20px -9px rgba(0, 0, 0, 0.5);
   text-align: center;
   transition: all 0.4s;
-  background-size: 100%;
-}
+  border: 3px solid $hoverColor;
+  background-color: $hoverColor;
 
-.photo-card:hover {
-  box-shadow: 0px 0px 59px -8px rgba(0, 0, 0, 0.75);
-}
-.photo-card:hover .info {
-  opacity: 1;
+  &:hover {
+    box-shadow: 0px 0px 59px -8px rgba(0, 0, 0, 0.75);
+  }
+  &:hover .info {
+    opacity: 1;
+  }
 }
 
 .info {
@@ -108,13 +109,13 @@ button[type='button'] {
   font-style: 16px;
   z-index: 20;
   opacity: 0;
+  padding: 0;
 }
 
 .info-item {
-  font-family: Delicious Handrawn;
-  font-size: 20px;
+  font-family: Roboto Mono;
+  font-size: 13px;
   letter-spacing: 0.1em;
-  color: #507350;
+  color: $textColor;
   padding: 0;
-  line-height: 0;
 }

@@ -8,7 +8,7 @@ function renderMarkup(response) {
         `
         <div class="photo-card">
           <a href="${im.largeImageURL}">
-            <img src="${im.webformatURL}" alt="${im.tags}" loading="lazy" width=400/>
+            <img src="${im.webformatURL}" alt="${im.tags}" loading="lazy" width=300/>
           </a>
             <div class="info">
                 <p class="info-item">
