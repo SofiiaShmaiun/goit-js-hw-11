@@ -31,8 +31,8 @@ async function fetchImages(event) {
     );
 
     if (response.data.hits.length === 0) {
-      queryInput.value = '';
       loadMoreButton.classList.add('is-hidden');
+      queryInput.value = '';
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
@@ -49,11 +49,4 @@ async function fetchImages(event) {
   }
 }
 
-export {
-  fetchImages,
-  BASE_URL,
-  API_KEY,
-  loadMoreButton,
-  queryText,
-  per_page,
-};
+export { fetchImages, BASE_URL, API_KEY, loadMoreButton, queryText, per_page };
