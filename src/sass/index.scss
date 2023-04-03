@@ -97,9 +97,6 @@ button[type='button'] {
   &:hover {
     box-shadow: 0px 0px 59px -8px rgba(0, 0, 0, 0.75);
   }
-  &:hover .info {
-    opacity: 1;
-  }
 }
 
 .info {
@@ -107,8 +104,6 @@ button[type='button'] {
   width: 100%;
   margin: 0 auto;
   font-style: 16px;
-  z-index: 20;
-  opacity: 0;
   padding: 0;
 }
 

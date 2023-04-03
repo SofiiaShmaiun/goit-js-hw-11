@@ -1,21 +1,9 @@
-const axios = require('axios').default;
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { pixabayAPI, queryInput } from './pixabayAPI';
 import { renderMarkup } from './renderMarkup';
 
-const API_KEY = '34892957-edf6b51172121986d596d6631';
-const BASE_URL = 'https://pixabay.com/api/';
-
-const queryInput = document.querySelector('input');
 const loadMoreButton = document.querySelector('.load-more');
 const gallery = document.querySelector('.gallery');
-
-let queryText;
-let page = 1;
-let per_page = 40;
-
-queryInput.addEventListener('input', event => {
-  queryText = event.target.value.trim();
-});
 
 async function fetchImages(event) {
   event.preventDefault();
@@ -26,27 +14,23 @@ async function fetchImages(event) {
       return;
     }
 
-    const response = await axios.get(
-      `${BASE_URL}?key=${API_KEY}&q='${queryText}'&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${per_page}`
-    );
+    const images = await pixabayAPI();
 
-    if (response.data.hits.length === 0) {
+    if (images.data.hits.length === 0) {
       loadMoreButton.classList.add('is-hidden');
       queryInput.value = '';
-      Notiflix.Notify.failure(
+      Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-    } else if (response.data.totalHits > 0) {
-      Notiflix.Notify.success(
-        `Hooray! We found ${response.data.totalHits} images.`
-      );
-      renderMarkup(response);
+    } else if (images.data.totalHits > 0) {
+      Notify.success(`Hooray! We found ${images.data.totalHits} images.`);
       queryInput.value = '';
       loadMoreButton.classList.remove('is-hidden');
+      renderMarkup(images);
     }
   } catch (error) {
     console.log(error.stack);
   }
 }
 
-export { fetchImages, BASE_URL, API_KEY, loadMoreButton, queryText, per_page };
+export { fetchImages, loadMoreButton };
