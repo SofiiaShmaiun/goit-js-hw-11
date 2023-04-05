@@ -1,4 +1,3 @@
-import SimpleLightbox from 'simplelightbox';
 const gallery = document.querySelector('.gallery');
 
 function renderMarkup(response) {
@@ -29,12 +28,6 @@ function renderMarkup(response) {
     .join('');
 
   gallery.insertAdjacentHTML('beforeend', markup);
-
-  new SimpleLightbox('.gallery a', {
-    captionType: 'attr',
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
 }
 
 export { renderMarkup};

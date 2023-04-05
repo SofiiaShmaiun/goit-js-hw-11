@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { pixabayAPI } from './js/pixabayAPI';
 import { renderMarkup } from './js/renderMarkup';
-import { fetchImages, loadMoreButton } from './js/fetchImages';
+import { fetchImages, loadMoreButton, lightbox } from './js/fetchImages';
 
 const submitQueryButton = document.querySelector('.search-form');
 
@@ -15,8 +15,9 @@ const per_page = 40;
 async function handleLoadMore() {
   page += 1;
   try {
-    const loadMore = await pixabayAPI();
+    const loadMore = await pixabayAPI(page);
     renderMarkup(loadMore);
+    lightbox.refresh();
 
     if (loadMore.data.hits.length < per_page) {
       loadMoreButton.classList.add('is-hidden');
